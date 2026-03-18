@@ -19,9 +19,14 @@ public class Main {
             System.out.println("3. Search Vehicle by ID");
             System.out.println("4. Rent Vehicle");
             System.out.println("5. Return Vehicle");
-            System.out.println("6. Exit");
+            System.out.println("6. Remove an Vehicle");
+            System.out.println("7. View Vehicle  Statistics");
+
+            System.out.println("===================================");
 
             System.out.print("Enter choice: ");
+
+
 
             if (!sc.hasNextInt()) {
                 System.out.println("Invalid input! Please enter a number.");
@@ -189,9 +194,21 @@ public class Main {
                     break;
 
                 case 6:
-
-                    System.out.println("Exiting system...");
+                    System.out.println("Enter Vehicle ID to remove: ");
+                    if(sc.hasNextInt()){
+                        int removeId=sc.nextInt();
+                        manager.removeVehicle(removeId);
+                    }
+                    else{
+                        System.out.println("Invalid Id");
+                        sc.next();
+                    }
                     break;
+
+                case 7:
+                    manager.vehicleStatistics();
+
+
 
                 default:
 

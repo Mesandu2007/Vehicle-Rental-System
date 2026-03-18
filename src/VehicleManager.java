@@ -167,6 +167,64 @@ public class VehicleManager {
             e.printStackTrace();
         }
     }
+    public void removeVehicle(int id){
+        Vehicle v= binarySearchVehicle(id);
+        if(v== null){
+            System.out.println("Vehicle not found!");
+            return;
+        }
+        vehicles.remove(v);
+        try (Connection conn = DBConnection.getConnection();
+
+             PreparedStatement ps = conn.prepareStatement(
+                     "DELETE FROM vehicles WHERE vehicle_id=?")) {
+
+            ps.setInt(1, id);
+
+            int rows = ps.executeUpdate();
+
+            if (rows > 0) {
+                System.out.println("Vehicle removed successfully");
+            } else {
+                System.out.println("Vehicle not found in database");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public void vehicleStatistics(){
+        int rented=0;
+        int available=0;
+
+        for(int i=0; i<vehicles.size();i++){
+            if(vehicles.get(i).isAvailable()){
+                available++;
+            }
+            else{
+                rented++;
+            }
+        }
+        System.out.println("Total Vehicles: "+ vehicles.size());
+        System.out.println("Available Vehicles: " + available);
+        System.out.println("Rented Vehicles: " + rented);
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Load vehicles from database
     public void loadVehicles() {
